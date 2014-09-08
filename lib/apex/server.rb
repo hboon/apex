@@ -3,6 +3,8 @@ module Apex
     PLACEHOLDER_MARKER = ':m'
     include DelegateInterface
 
+    attr_accessor :port
+
     def on_launch
       start_server
     end
@@ -113,7 +115,15 @@ module Apex
     end
 
     def start
-      server.startWithPort self.class.port, bonjourName: nil
+      server.startWithPort port, bonjourName: nil
+    end
+
+    def stop
+      server.stop
+    end
+
+    def port
+      @port ? @port : self.class.port
     end
 
     # Class methods *************************
